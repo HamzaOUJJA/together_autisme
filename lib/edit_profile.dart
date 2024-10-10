@@ -1,30 +1,29 @@
 import 'package:flutter/material.dart';
-
-
+import 'profile.dart'; // Import the profile page
 
 class EditProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Profile Page',
+      title: 'Edit Profile Page',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ProfilePage(),
+      home: EditProfileWidget(),
     );
   }
 }
 
-class ProfilePage extends StatelessWidget {
+class EditProfileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profil'),
+        title: Text('Edit Profile'),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            // Handle back action
+            Navigator.pop(context);  // Go back to the previous page (Profile page)
           },
         ),
       ),

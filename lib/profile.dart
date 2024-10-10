@@ -3,10 +3,9 @@ import 'settings.dart';       // Import the other pages
 import 'edit_profile.dart';
 import 'privacy_policy.dart';
 import 'help_center.dart';
+import 'homepage.dart';      // Import homepage to navigate back
 
-void main() {
-  runApp(ProfilePage());
-}
+
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -32,13 +31,20 @@ class ProfileWidget extends StatefulWidget {
 }
 
 class _ProfileWidgetState extends State<ProfileWidget> {
+  int _selectedIndex = 2; // Profile is the third item (index 2)
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.blue),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            ); // Go back to the previous page
+          },
         ),
         backgroundColor: Colors.white,
         title: Text(
@@ -106,6 +112,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                   leading: Icon(Icons.logout, color: Colors.blue),
                   title: Text('Logout'),
                   trailing: Icon(Icons.arrow_forward_ios),
+                  onTap: () {
+                    // Perform logout action
+                  },
                 ),
               ],
             ),
@@ -113,24 +122,54 @@ class _ProfileWidgetState extends State<ProfileWidget> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+          switch (index) {
+            case 0:
+            // Navigate to HomePage
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => HomePage()),
+              );
+              break;
+
+            case 2:
+            // Stay on ProfilePage
+              break;
+            case 3:
+            // Navigate to Calendar (implement Calendar page accordingly)
+            // Navigator.pushReplacement(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => CalendarPage()),
+            // );
+              break;
+          }
+        },
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: '',
+            label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.message),
-            label: '',
+            label: 'Messages',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: '',
+            label: 'Profile',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_today),
-            label: '',
+            label: 'Calendar',
           ),
         ],
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.grey,
+        selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+        type: BottomNavigationBarType.fixed,
       ),
     );
   }
